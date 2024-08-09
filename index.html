@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<!--
+
+Taroko Gorge
+ Original Python program:
+ 8 January 2009, Taroko Gorge National Park, Taiwan and Eva Air Flight 28
+ This JavaScript version, with links:
+ 5 May 2020
+
+Copyright (c) 2009-2020 Nick Montfort <nickm@nickm.com>
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+-->
+<style type="text/css">
+/* <![CDATA[ */
+body {
+ background: #000;
+ color: #f00;
+ margin: 0;
+ font-family: Optima, sans-serif;
+ font-size: 13pt;
+}
+#poem-container {
+ margin: 0 24pt;
+}
+#poem-container div {
+ height: 16pt;
+}
+#poem-container a {
+ color: #117;
+ text-decoration: none;
+}
+/* ]]> */
+</style>
+<script type="text/javascript">
+var t=0;
+var n=0;
+var paths=0;
+var above='kota,tuhan,peradaban,zaman,senjata,mimpi,bumi,teknologi,anak,waktu,kenangan,tangis,cita-cita,harapan,keyakinan,ideologi,agama,'.split(',');
+var below='peluru,belati,pembantaian,penaklukan,perang,nuklir,bom,tank,meriam,ranjau,panah,martir,fetisisme tentara,sniper,kaliber senapan,mesin,drone,tembakan,'.split(',');
+var trans='mencatat,berlagu,bercerita,menggumam,meneriakkan,mengenang,berbicara,merekam,merayakan,menyambut,bercakap'.split(',');
+var imper='barisan,aliansi,siasat,merangkak,menyeret,menarik,mengalir,seperti,muslihat,mengarah,merayap,masuk';
+imper=imper.split(',');
+var intrans='bersiaga,meledak,mengancam,bersitegang,berletusan,berguguran,berjatuhan,mendidih,menyala,meregang'.split(',');
+var s=',,'.split(',');
+var texture='kesaktian,kekuatan,ketahanan,kejayaan'.split(',');
+function rand_range(max) {
+ return Math.floor(Math.random()*(max+1));
+}
+function choose(array) {
+ return array[rand_range(array.length-1)];
+}
+function path() {
+ var p=rand_range(1);
+ var words=choose(above);
+ if ((words=='kota')&&(rand_range(3)==1)) {
+  words='kota '+choose(trans);
+ } else {
+  words+=s[p]+' '+choose(trans)+s[(p+1)%2];
+ }
+ words+=' tentang '+choose(below)+choose(s)+'.';
+ return words;
+}
+function site() {
+ var words='';
+ if (rand_range(2)==1) {
+  words+=choose(above);
+ } else {
+  words+=choose(below);
+ }
+ words+='2 '+choose(intrans)+'.';
+ return words;
+}
+function cave() {
+ var adjs=('defile,'+choose(texture)+',mimpi buruk,darah,nanah,mayat,daging,kehancuran,kepala').split(',');
+ var target=1+rand_range(3);
+ while (adjs.length>target) {
+  adjs.splice(rand_range(adjs.length),1);
+  }
+ var words='\u00a0\u00a0'+choose(imper)+' sebuah '+adjs.join(' ')+' \u2014';
+ return words;
+}
+function do_line() {
+ var main=document.getElementById('main');
+ if (t<=25) {
+  t+=1;
+ } else {
+  main.removeChild(document.getElementById('main').firstChild);
+ }
+ if (n===0) {
+  text=' ';
+ } else if (n==1) {
+  paths=2+rand_range(2);
+  text=path();
+ } else if (n<paths) {
+  text=site();
+ } else if (n==paths) {
+  text=path();
+ } else if (n==paths+1) {
+  text=' ';
+ } else if (n==paths+2) {
+  text=cave();
+ } else {
+  text=' ';
+  n=0;
+ }
+ n+=1;
+ text=text.substring(0,1).toUpperCase()+text.substring(1,text.length);
+ last=document.createElement('div');
+ last.appendChild(document.createTextNode(text));
+ main.appendChild(last);
+}
+function poem() {
+ setInterval(do_line, 1200);
+}
+</script>
+  <title>Zaman Mencatat</title>
+</head>
+<body onload="poem()">
+<div id="poem-container">
+  <div style="float:right; margin-top:12px; color:#0b3; height:60pt">
+    <del><div>Taroko Gorge &middot; 2009-01-08</div></del>
+    <del><a href="original.html">Nick Montfort</a></del><br/>
+    <div>Zaman Mencatat; 2024-08-02</div>
+    <a href="https://www.facebook.com/bangkit.darojad.98?mibextid=JRoKGi">Bangkit I D; 2024-08-02</a>
+  </div>
+  <div id="main"></div>
+</div>
+</body>
+</html>
